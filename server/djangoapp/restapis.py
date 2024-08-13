@@ -1,5 +1,5 @@
 # Uncomment the imports below before you add the function code
-# import requests
+import requests
 import os
 from dotenv import load_dotenv
 
@@ -26,9 +26,9 @@ def get_request(endpoint, **kwargs):
         # Call get method of requests library with URL and parameters
         response = requests.get(request_url)
         return response.json()
-    except:
+    except Exception as e:
         # If any error occurs
-        print("Network exception occurred")
+        print(f"Network exception occurred\n{e}")
 
 
 # def analyze_review_sentiments(text):
