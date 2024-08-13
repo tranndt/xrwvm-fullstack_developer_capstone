@@ -1,16 +1,18 @@
 FROM node:18.12.1-bullseye-slim
 
-RUN npm install -g npm@9.1.3
+# Set working directory
+WORKDIR /app
 
-ADD package.json .
-ADD app.js .
-ADD review.js .
-ADD dealership.js .
-ADD data/dealerships.json .
-ADD data/reviews.json .
-COPY . .
+# Install dependencies
+COPY package.json ./
 RUN npm install
 
+# Copy application files
+COPY app.js review.js dealership.js ./
+COPY data/dealerships.json data/reviews.json ./
+
+# Expose the port the app runs on
 EXPOSE 3030
 
-CMD [ "node", "app.js" ]
+# Command to run the application
+CMD ["node", "app.js"]
