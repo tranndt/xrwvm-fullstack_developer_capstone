@@ -73,7 +73,8 @@ def registration(request):
         return JsonResponse(data)
 
 
-# Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
+# Update the `get_dealerships` render list of dealerships all by default, 
+# particular state if state is passed
 def get_dealerships(request, state="All"):
     if state == "All":
         endpoint = "/fetchDealers"
@@ -96,7 +97,8 @@ def get_dealer_reviews(request, dealer_id):
                 review_detail['sentiment'] = response['sentiment']
             else:
                 # Handle the case where sentiment analysis failed
-                review_detail['sentiment'] = "unknown"  # Default or fallback sentiment
+                # Default or fallback sentiment
+                review_detail['sentiment'] = "unknown"  
 
         return JsonResponse({"status": 200, "reviews": reviews})
     else:
