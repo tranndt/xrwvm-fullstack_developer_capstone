@@ -97,7 +97,8 @@ def get_dealer_reviews(request, dealer_id):
                 review_detail['sentiment'] = response['sentiment']
             else:
                 # Handle the case where sentiment analysis failed
-                review_detail['sentiment'] = "unknown"  # Default or fallback sentiment
+                # Default or fallback sentiment
+                review_detail['sentiment'] = "unknown"
 
         return JsonResponse({"status": 200, "reviews": reviews})
     else:
@@ -143,4 +144,3 @@ def get_cars(request):
             "CarMake": car_model.car_make.name
         })
     return JsonResponse({"CarModels": cars})
-
