@@ -1,13 +1,12 @@
-from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.contrib.auth import logout
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import logout, login, authenticate
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import logging
 import json
 from .populate import initiate
 from .restapis import get_request, analyze_review_sentiments, post_review
+from .models import CarMake, CarModel
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -122,12 +121,12 @@ def add_review(request):
             post_review(data)
             return JsonResponse({"status": 200})
         except Exception:
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+            return JsonResponse({
+                "status": 401,
+                "message": "Error in posting review"
+            })
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
-
-
-from .models import CarMake, CarModel
 
 
 def get_cars(request):
@@ -138,5 +137,8 @@ def get_cars(request):
     car_models = CarModel.objects.select_related('car_make')
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
+        cars.append({
+            "CarModel": car_model.name,
+            "CarMake": car_model.car_make.name
+        })
     return JsonResponse({"CarModels": cars})
